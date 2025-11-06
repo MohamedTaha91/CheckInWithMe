@@ -30,9 +30,14 @@ export async function signup(formData: FormData) {
 
   // type-casting here for convenience
   // in practice, you should validate your inputs
+
   const data = {
     email: formData.get('email') as string,
     password: formData.get('password') as string,
+    options: {
+    data: {
+     isMentor: formData.get('isMentor') as string === 'on'? true : false,
+    }},
   }
 
   const { error } = await supabase.auth.signUp(data)
@@ -42,5 +47,5 @@ export async function signup(formData: FormData) {
   }
 
   revalidatePath('/', 'layout')
-  redirect('/')
+  redirect('/') 
 }
